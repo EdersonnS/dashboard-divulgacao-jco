@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"/c/Users/ederr/OneDrive/Desktop/Trabalhos - Claude/Dashboard Divulgação - JCO\" 2>&1 | head -50)"
+    ]
+  }
+}

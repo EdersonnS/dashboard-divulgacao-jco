@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/*
+  Identidade visual JCO Divulgação.
+
+  Laranja é a marca e conduz a interface: botão principal, relógio, logo e o
+  item ativo do menu. Os status vivem nos pontinhos coloridos (verde/âmbar/
+  vermelho), pequenos e discretos, sem competir com o laranja.
+
+  Superfícies: cards brancos com borda fina e sombra suave sobre fundo cinza
+  bem claro.
+*/
+@theme {
+  --font-sans: var(--font-plex-sans);
+  --font-display: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+
+  /* superfícies */
+  --color-canvas: #f6f7f9;
+  --color-painel: #ffffff;
+  --color-linha: #e8eaed;
+  --color-linha-forte: #d3d7dd;
+
+  /* texto */
+  --color-tinta: #16181d;
+  --color-tinta-media: #5b6270;
+  --color-tinta-fraca: #8b93a1;
+
+  /* marca */
+  --color-marca: #f97316;
+  --color-marca-forte: #ea6a0c;
+  --color-marca-suave: #fff3ea;
+  --color-marca-borda: #ffd9bd;
+
+  /* status — pontinhos e badges */
+  --color-ok: #16a34a;
+  --color-ok-suave: #eafaf0;
+  --color-ok-ink: #12783a;
+
+  --color-espera: #f59e0b;
+  --color-espera-suave: #fff8e8;
+  --color-espera-ink: #8a5d06;
+
+  --color-erro: #dc2626;
+  --color-erro-suave: #fdeded;
+  --color-erro-ink: #a82420;
+
+  --color-info: #2563eb;
+  --color-info-suave: #eef3fe;
+  --color-info-ink: #1d4ed8;
+
+  /* sombra suave dos cards */
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Números que mudam no lugar (relógio, contador) não podem tremer. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.card {
+  background: var(--color-painel);
+  border: 1px solid var(--color-linha);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+/*
+  Card de destino colore conforme o progresso, confirmando visualmente o que já
+  foi feito: copiado (azul) → divulgado (verde). Mesmas famílias dos pontinhos
+  de status. Regras sem camada, como .card, para valerem sobre os utilitários.
+*/
+.card-copiado {
+  background: var(--color-info-suave);
+  border: 1px solid color-mix(in srgb, var(--color-info) 30%, transparent);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+.card-divulgado {
+  background: var(--color-ok-suave);
+  border: 1px solid color-mix(in srgb, var(--color-ok) 35%, transparent);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Piso de qualidade: foco de teclado sempre visível. */
+:focus-visible {
+  outline: 2px solid var(--color-marca);
+  outline-offset: 2px;
+}
+
+/* Piso de qualidade: quem pede menos movimento, recebe menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
