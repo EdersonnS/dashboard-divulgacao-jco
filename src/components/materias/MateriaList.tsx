@@ -6,9 +6,9 @@ import type { MateriaListItem } from "./types";
 export type { MateriaListItem };
 
 /**
- * Linha do tempo — as matérias em ordem de horário, do que exige ação para o
- * que já passou. O agrupamento por estado saiu: o ícone e o badge de cada linha
- * já dizem o estado, e a ordem cronológica é como a redação pensa.
+ * Linha do tempo — a agenda em ordem cronológica CRESCENTE: a próxima a ir ao ar
+ * fica no topo e as agendadas para mais tarde vão para o fim. Assim, cada matéria
+ * nova (agendada para depois) entra no fim da lista, não no começo.
  */
 export function MateriaList({
   materias,
@@ -19,7 +19,7 @@ export function MateriaList({
 }) {
   const ordenadas = [...materias].sort(
     (a, b) =>
-      new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime(),
+      new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime(),
   );
 
   return (

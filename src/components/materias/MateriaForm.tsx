@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
 import { Button } from "@/components/ui/Button";
 import { combineDateTime, nowDateInputValue, nowTimeInputValue } from "@/lib/time";
 import { LivePreviewPanel } from "./LivePreviewPanel";
@@ -27,6 +28,7 @@ export function MateriaForm({
   initialValues?: MateriaFormInitialValues;
 }) {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
   const [titulo, setTitulo] = useState(initialValues?.titulo ?? "");
   const [subtitulo, setSubtitulo] = useState(initialValues?.subtitulo ?? "");
   const [link, setLink] = useState(initialValues?.link ?? "");
@@ -74,8 +76,14 @@ export function MateriaForm({
         return;
       }
 
+      // revalida o cache do SWR ANTES de navegar, para a matéria já aparecer
+      // na lista/detalhe sem precisar recarregar a página
+      await mutate("/api/materias");
+      if (mode === "edit" && materiaId) {
+        await mutate(`/api/materias/${materiaId}`);
+      }
+
       router.push(mode === "create" ? "/" : `/materias/${materiaId}`);
-      router.refresh();
     } catch {
       setError("Erro de conexão. Tente novamente.");
     } finally {
